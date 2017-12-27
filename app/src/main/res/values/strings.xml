@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Forum App</string>
+    <string name="hint_email">someone@domain.com</string>
+    <string name="hint_password">Password</string>
+    <string name="login">LogIn</string>
+    <string name="empty_password">Enter a password</string>
+    <string name="short_password">Password Length Must greater than 7</string>
+    <string name="invalid_email">Invalid Email Address</string>
+    <string name="internet_connection_req">Internet Connection Required</string>
+    <string name="hint_conf_password">Confirm Password</string>
+    <string name="signup">Register</string>
+    <string name="hint_username">Full Name</string>
+    <string name="invalid_username">Invalid User Name</string>
+    <string name="conf_password_req">Password Confermation Required</string>
+    <string name="pass_mismatch">Passowrd Mismatch</string>
+    <string name="register_success">Register Successfully</string>
+    <string name="register"><u>Register Here</u></string>
+    <string name="already_account"><u>Already Have Account?</u></string>
+    <string name="hint_topic">Topic Tittle</string>
+    <string name="hint_topics_descp">Topic Description</string>
+    <string name="topic">Add Topic</string>
+    <string name="addTopic">Add New Topic</string>
+    <string name="req_topic_title">Topic Name Required</string>
+    <string name="req_topic_descp">Topic Description Required</string>
+    <string name="topic_add_success">Topic Added Successfully</string>
+    <string name="cancel">Cancel</string>
+    <string name="logout">Logout</string>
+</resources>

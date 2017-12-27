@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "859532759939",
+    "firebase_url": "https://fourmapp-ca067.firebaseio.com",
+    "project_id": "fourmapp-ca067",
+    "storage_bucket": "fourmapp-ca067.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859532759939:android:21aeb5f3e590aa73",
+        "android_client_info": {
+          "package_name": "com.forumapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859532759939-ot4ec8bn3e484tq1rf4oj4a3esf707sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn0pAFX5Zl3Szk4fGLYw3_JrULo6Ac9Vc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

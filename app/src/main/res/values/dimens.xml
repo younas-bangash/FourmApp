@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textBottom">16dp</dimen>
+    <dimen name="inputLayoutTop">16dp</dimen>
+    <dimen name="buttonTop">16dp</dimen>
+    <dimen name="registerMarginTop">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="aboveFadeBtnSpace">80dp</dimen>
+</resources>
