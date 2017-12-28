@@ -1,84 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.forumapp.views.TopicsActivity"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:paddingEnd="@dimen/marginEnd"
-    android:paddingLeft="@dimen/marginStart"
-    android:paddingRight="@dimen/marginEnd"
-    android:paddingStart="@dimen/marginStart">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/registerMarginTop"
-        android:text="@string/addTopic"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+    <data>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout_topics"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/buttonTop">
-
-        <EditText
-            android:id="@+id/topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_topic"
-            android:inputType="textEmailAddress"
-            android:paddingBottom="@dimen/textBottom" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout_topics_descp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/inputLayoutTop">
-
-        <EditText
-            android:id="@+id/topics_descp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|start"
-            android:hint="@string/hint_topics_descp"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:paddingBottom="@dimen/textBottom"
-            android:scrollHorizontally="false"
-            android:scrollbars="vertical" />
-    </android.support.design.widget.TextInputLayout>
-
+        <variable
+            name="topicViewModel"
+            type="com.forumapp.viewModels.TopicViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/marginEnd"
+        android:paddingLeft="@dimen/marginStart"
+        android:paddingRight="@dimen/marginEnd"
+        android:paddingStart="@dimen/marginStart"
+        tools:context="com.forumapp.views.TopicsActivity">
 
-        <Button
-            android:id="@+id/addTopic"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/buttonTop"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:text="@string/topic" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/registerMarginTop"
+            android:text="@string/addTopic"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
-
-        <Button
-            android:id="@+id/close"
-            android:layout_width="0dp"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_topics"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/buttonTop"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:onClick="@{()->topicViewModel.btnCancel()}"
-            android:text="@string/cancel" />
+            android:layout_marginTop="@dimen/buttonTop">
 
+            <EditText
+                android:id="@+id/topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_topic"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="@dimen/textBottom"
+                android:text="@={topicViewModel.topic}" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_topics_descp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inputLayoutTop">
+
+            <EditText
+                android:id="@+id/topics_descp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:hint="@string/hint_topics_descp"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:paddingBottom="@dimen/textBottom"
+                android:scrollHorizontally="false"
+                android:scrollbars="vertical"
+                android:text="@={topicViewModel.topicDescription}" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/addTopic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/buttonTop"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:onClick="@{()->topicViewModel.addTopicBtnClick()}"
+                android:text="@string/topic" />
+
+            <Button
+                android:id="@+id/close"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/buttonTop"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:onClick="@{()->topicViewModel.btnCancel()}"
+                android:text="@string/cancel" />
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+</layout>

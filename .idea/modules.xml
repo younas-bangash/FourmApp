@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FourmApp.iml" filepath="$PROJECT_DIR$/FourmApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FourmApp.iml" filepath="$PROJECT_DIR$/.idea/FourmApp.iml" />
+      <module fileurl="file://E:\General Projects\FourmApp\FourmApp.iml" filepath="E:\General Projects\FourmApp\FourmApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

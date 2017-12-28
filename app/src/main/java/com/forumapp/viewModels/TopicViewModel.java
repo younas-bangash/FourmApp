@@ -2,18 +2,19 @@ package com.forumapp.viewModels;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.database.DataSetObserver;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Toast;
 
 import com.forumapp.R;
 import com.forumapp.databinding.AddTopicDialogBinding;
 import com.forumapp.models.TopicModel;
+import com.forumapp.views.ChatListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -24,20 +25,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static java.security.AccessController.getContext;
-
 /**
  * Created by YounasBangash on 12/22/2017.
  */
 
 public class TopicViewModel extends BaseObservable {
-    public String topic;
+    public String topic = null;
+    private ChatListAdapter mChatListAdapter = null;
+    public String topicDescription = null;
     private Activity callingActivity = null;
-    public String topicDescription;
     private AlertDialog.Builder addTopicDialog = null;
+    private AlertDialog addTopicDialogShow = null;
     private TopicModel topicModel = null;
     private DatabaseReference databaseReferenceTopics = null;
     private FirebaseAuth firebaseAuth = null;
+
 
 
     public TopicViewModel(Activity context){
@@ -46,6 +48,18 @@ public class TopicViewModel extends BaseObservable {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReferenceTopics = FirebaseDatabase.getInstance().getReference()
                 .child("topics");
+    }
+    
+    public void getTopicList(){
+        mChatListAdapter = new ChatListAdapter(databaseReferenceTopics, callingActivity, 
+                R.layout.topic_view);
+        mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+//                listView.setSelection(mChatListAdapter.getCount() - 1);
+            }
+        });
     }
 
     public void addTopicBtnClick(){
@@ -57,14 +71,18 @@ public class TopicViewModel extends BaseObservable {
     }
 
     public void btnCancel(){
-        addTopicDialog.create().dismiss();
+        addTopicDialogShow.dismiss();
     }
 
     public void onFabBtnClick(){
+        AddTopicDialogBinding addTopicDialogBinding =
+                DataBindingUtil.inflate(LayoutInflater.from(callingActivity),
+                        R.layout.add_topic_dialog, null, false);
+        addTopicDialogBinding.setTopicViewModel(this);
         addTopicDialog = new AlertDialog.Builder(callingActivity);
-        addTopicDialog.setView(R.layout.add_topic_dialog);
+        addTopicDialog.setView(addTopicDialogBinding.getRoot());
         addTopicDialog.setCancelable(false);
-        addTopicDialog.create().show();
+        addTopicDialogShow = addTopicDialog.show();
     }
 
     public void setTopic(String topic){
@@ -72,7 +90,7 @@ public class TopicViewModel extends BaseObservable {
     }
 
     public void setTopicDescription(String description){
-        this.topicDescription = topicDescription;
+        this.topicDescription = description;
     }
 
     private void addTopic() {
@@ -126,11 +144,11 @@ public class TopicViewModel extends BaseObservable {
         }
     }
 
-
+    @Bindable
     public String getTopic(){
         return topic;
     }
-
+    @Bindable
     public String getTopicDescription(){
         return topicDescription;
     }

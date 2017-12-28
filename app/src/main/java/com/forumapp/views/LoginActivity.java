@@ -1,16 +1,12 @@
 package com.forumapp.views;
 
-import android.databinding.BaseObservable;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.forumapp.R;
 import com.forumapp.databinding.ActivityLoginBinding;
 import com.forumapp.viewModels.LoginViewModel;
-
-import java.util.Observable;
-import java.util.Observer;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding activityLoginBinding = null;
