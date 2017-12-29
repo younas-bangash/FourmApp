@@ -19,11 +19,7 @@ public class FCMNotification {
     public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
 
     public static void pushFCMNotification(String sendingDeviceIdKey, String notificationMessage,
-                                           String notificationTitle, String eventID, String stallID,
-                                           String senderID,
-                                           String stallPrice,
-                                           String notifReceiverUserID,
-                                           String notificationType) throws Exception {
+                                           String notificationTitle) throws Exception {
         URL url = new URL(AUTH_KEY_FCM);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setUseCaches(false);

@@ -25,4 +25,9 @@
     <string name="topic_add_success">Topic Added Successfully</string>
     <string name="cancel">Cancel</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_posts">PostsActivity</string>
+    <string name="type_post_here">Type Post Here....</string>
+    <string name="post">Post</string>
+    <string name="invalid_post_message">Enter Message</string>
+    <string name="new_post_title">New Post on Topic</string>
 </resources>

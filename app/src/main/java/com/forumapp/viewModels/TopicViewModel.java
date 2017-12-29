@@ -2,7 +2,6 @@ package com.forumapp.viewModels;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.DataSetObserver;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
@@ -15,14 +14,13 @@ import android.widget.Toast;
 import com.forumapp.R;
 import com.forumapp.databinding.AddTopicDialogBinding;
 import com.forumapp.models.TopicModel;
-import com.forumapp.views.ChatListAdapter;
+import com.forumapp.views.TopicListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,7 +31,7 @@ import java.util.Calendar;
 
 public class TopicViewModel extends BaseObservable {
     public String topic = null;
-    private ChatListAdapter mChatListAdapter = null;
+    private TopicListAdapter mChatListAdapter = null;
     public String topicDescription = null;
     private Activity callingActivity = null;
     private AlertDialog.Builder addTopicDialog = null;
@@ -42,8 +40,6 @@ public class TopicViewModel extends BaseObservable {
     private DatabaseReference databaseReferenceTopics = null;
     private FirebaseAuth firebaseAuth = null;
     private RecyclerView topicsList = null;
-
-
 
     public TopicViewModel(Activity context, RecyclerView topicsList){
         this.callingActivity = context;
@@ -57,7 +53,7 @@ public class TopicViewModel extends BaseObservable {
     }
     
     public void getTopicList(){
-        mChatListAdapter = new ChatListAdapter(callingActivity,databaseReferenceTopics,topicsList);
+        mChatListAdapter = new TopicListAdapter(callingActivity,databaseReferenceTopics,topicsList);
         mChatListAdapter.setRecylerView();
     }
 

@@ -14,13 +14,13 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginViewModel = new LoginViewModel(this);
         initDataBinding();
 
     }
 
     private void initDataBinding() {
         activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
-        loginViewModel = new LoginViewModel(this);
         activityLoginBinding.setLoginViewModel(loginViewModel);
     }
 

@@ -14,18 +14,18 @@
         <activity android:name=".views.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".views.TopicsActivity" />
         <activity android:name=".views.SignUpActivity" />
-        <activity android:name=".views.LoginActivity"/>
-
+        <activity android:name=".views.LoginActivity" />
 
         <!-- [START firebase_service] -->
         <service
-            android:exported="false"
-            android:name=".utils.MyFirebaseMessagingService">
+            android:name=".utils.MyFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -35,23 +35,24 @@
 
         <!-- [START firebase_iid_service] -->
         <service
-            android:exported="false"
-            android:name=".utils.MyFirebaseInstanceIDService">
+            android:name=".utils.MyFirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name=".utils.SendNotificationService" />
+        <service android:name=".utils.SendNotificationService" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_ic_notification" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
+
+        <activity
+            android:name=".views.PostsActivity"
+            android:label="@string/title_activity_posts"/>
     </application>
 
 </manifest>

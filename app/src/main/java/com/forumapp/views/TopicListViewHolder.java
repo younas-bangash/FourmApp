@@ -11,7 +11,7 @@ import com.forumapp.models.TopicModel;
  * Created by YounasBangash on 12/29/2017.
  */
 
-public class VideoViewHolder extends RecyclerView.ViewHolder {
+public class TopicListViewHolder extends RecyclerView.ViewHolder {
     public TextView chatTitle;
     public TextView chatBy;
     public TextView totalComments;
@@ -20,11 +20,11 @@ public class VideoViewHolder extends RecyclerView.ViewHolder {
     public TopicModel mItem;
     public final View mView;
 
-    public VideoViewHolder(View itemView) {
+    public TopicListViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
-        chatTitle = (TextView) itemView.findViewById(R.id.chatTitle);
-        chatDescp = (TextView) itemView.findViewById(R.id.chatDescp);
+        chatTitle = itemView.findViewById(R.id.chatTitle);
+        chatDescp = itemView.findViewById(R.id.chatDescp);
         chatBy = itemView.findViewById(R.id.chatby);
         totalComments = itemView.findViewById(R.id.totalComment);
         dateTime = itemView.findViewById(R.id.dateTime);

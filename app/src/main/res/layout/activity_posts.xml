@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="postsViewModel"
+            type="com.forumapp.viewModels.PostsViewModel" />
+
+        <variable
+            name="topicModel"
+            type="com.forumapp.models.TopicModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.forumapp.views.PostsActivity">
+
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{topicModel.topicTitle}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/chatDescp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chatTitle"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@{topicModel.topicDescription}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/chatDescp"
+            android:layout_marginTop="8dp"
+            android:background="@color/divider" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/topicPosList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottomeView"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="@dimen/aboveFadeBtnSpace"
+            android:scrollbars="vertical" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/topicPosList"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/bottomeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/newPost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@={postsViewModel.postMessage}"
+                android:background="@drawable/rectangular_layuout"
+                android:gravity="start"
+                android:hint="@string/type_post_here"
+                android:minLines="5"
+                android:padding="8dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+            <Button
+                android:id="@+id/addPost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.3"
+                android:onClick="@{()->postsViewModel.onFabBtnClick()}"
+                android:text="@string/post"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
