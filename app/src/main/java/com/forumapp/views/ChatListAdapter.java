@@ -5,46 +5,99 @@ package com.forumapp.views;
  */
 
 import android.app.Activity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import com.forumapp.R;
 import com.forumapp.models.TopicModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
  * @author greg
  * @since 6/21/13
- *
+ * <p>
  * This class is an example of how to use FirebaseListAdapter. It uses the <code>Chat</code> class to encapsulate the
  * data for each individual chat message
  */
-public class ChatListAdapter extends FirebaseListAdapter<TopicModel> {
-    public ChatListAdapter(Query ref, Activity activity, int layout) {
-        super(ref, TopicModel.class, layout, activity);
+public class ChatListAdapter implements ValueEventListener {
+    private List<TopicModel> topicList = new ArrayList<>();
+    private FirebaseListAdapter<TopicModel, VideoViewHolder> mAdapter;
+    private Activity callingActivity = null;
+    private Query eventsQuery = null;
+    private RecyclerView list = null;
 
+    public ChatListAdapter(Activity callingActivity, Query eventsQuery, RecyclerView list) {
+        this.callingActivity = callingActivity;
+        this.eventsQuery = eventsQuery;
+        this.list = list;
     }
 
-    /**
-     * Bind an instance of the <code>Chat</code> class to our view. This method is called by <code>FirebaseListAdapter</code>
-     * when there is a data change, and we are given an instance of a View that corresponds to the layout that we passed
-     * to the constructor, as well as a single <code>Chat</code> instance that represents the current data to bind.
-     *
-     * @param view A view instance corresponding to the layout we passed to the constructor.
-     * @param topicModel An instance representing the current state of a chat message
-     */
-    @Override
-    protected void populateView(View view, TopicModel topicModel) {
-        // Map a Chat object to an entry in our listview
+    public void setRecylerView() {
+        eventsQuery.addValueEventListener(this);
+        mAdapter = new FirebaseListAdapter<TopicModel, VideoViewHolder>(
+                TopicModel.class,
+                R.layout.topic_view,
+                VideoViewHolder.class,
+                eventsQuery,
+                10,
+                callingActivity.getApplicationContext()) {
 
-       /* String author = chat.getAuthor();
-        TextView authorText = (TextView) view.findViewById(R.id.author);
-        authorText.setText(author + ": ");
-        // If the message was sent by this user, color it differently
-        if (author != null && author.equals(mUsername)) {
-            authorText.setTextColor(Color.RED);
-        } else {
-            authorText.setTextColor(Color.BLUE);
-        }
-        ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());*/
+            @Override
+            protected void populateViewHolder(final VideoViewHolder viewHolder,
+                                              final TopicModel model, int position) {
+                if (model != null) {
+                    viewHolder.mItem = model;
+                    topicList.add(model);
+                    viewHolder.chatTitle.setText(model.getTopicTitle());
+                    viewHolder.chatDescp.setText(model.getTopicDescription());
+                    viewHolder.chatBy.setText(model.getTopicUserName());
+                    viewHolder.totalComments.setText(model.getTotalComments());
+                    viewHolder.dateTime.setText(model.getTopicDateTime());
+
+//                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (null != mListener) {
+//                                mListener.onEventClick(model);
+//                            }
+//                        }
+//                    });
+                }
+            }
+        };
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(callingActivity);
+        list.setLayoutManager(linearLayoutManager);
+        EndlessRecyclerViewScrollListener recylerViewScrolllistner
+                = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                mAdapter.more();
+            }
+        };
+        list.setAdapter(mAdapter);
+        list.addOnScrollListener(recylerViewScrolllistner);
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }

@@ -8,6 +8,7 @@ import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
@@ -39,27 +40,24 @@ public class TopicViewModel extends BaseObservable {
     private TopicModel topicModel = null;
     private DatabaseReference databaseReferenceTopics = null;
     private FirebaseAuth firebaseAuth = null;
+    private RecyclerView topicsList = null;
 
 
 
-    public TopicViewModel(Activity context){
+    public TopicViewModel(Activity context, RecyclerView topicsList){
         this.callingActivity = context;
         topicModel = new TopicModel();
         firebaseAuth = FirebaseAuth.getInstance();
+        this.topicsList = topicsList;
         databaseReferenceTopics = FirebaseDatabase.getInstance().getReference()
                 .child("topics");
+
+        getTopicList();
     }
     
     public void getTopicList(){
-        mChatListAdapter = new ChatListAdapter(databaseReferenceTopics, callingActivity, 
-                R.layout.topic_view);
-        mChatListAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-//                listView.setSelection(mChatListAdapter.getCount() - 1);
-            }
-        });
+        mChatListAdapter = new ChatListAdapter(callingActivity,databaseReferenceTopics,topicsList);
+        mChatListAdapter.setRecylerView();
     }
 
     public void addTopicBtnClick(){
@@ -100,6 +98,7 @@ public class TopicViewModel extends BaseObservable {
         topicModel.setTopicDescription(getTopicDescription());
         //noinspection ConstantConditions
         topicModel.setTopicUserID(firebaseAuth.getCurrentUser().getUid());
+        topicModel.setTotalComments("0");
         Calendar calendar = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df3 = new SimpleDateFormat("dd-MM-yyyy HH:mm");

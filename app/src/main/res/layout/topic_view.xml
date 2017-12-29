@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="4dp"
+    android:elevation="8dp"
+    card_view:cardCornerRadius="4dp">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chatTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:padding="8dp"
+            android:text="Hello Card"
+            android:textStyle="bold"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/chatDescp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chatTitle"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="Hello Card"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/bottomeView"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/bottomeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chatby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_person"
+                android:drawableLeft="@drawable/ic_person"
+                android:padding="4dp"
+                android:text="Hello Card"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/totalComment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_comments"
+                    android:drawableLeft="@drawable/ic_comments"
+                    android:padding="4dp"
+                    android:maxLines="1"
+                    android:text="Hello Card"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+
+                <TextView
+                    android:id="@+id/dateTime"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_time"
+                    android:drawableLeft="@drawable/ic_time"
+                    android:padding="4dp"
+                    android:maxLines="1"
+                    android:text="Hello Card"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

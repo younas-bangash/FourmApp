@@ -8,12 +8,49 @@ import java.util.Map;
  */
 
 public class TopicModel {
-    private String topicTitle;
-    private String topicDescription;
-    private String topicUserName;
-    private String topicDateTime;
-    private String topicUserID;
-    private String topicID;
+    public TopicModel() {
+    }
+
+    public String getTopicTitle() {
+        return topicTitle;
+    }
+
+    public String getTopicDescription() {
+        return topicDescription;
+    }
+
+    public String getTopicUserName() {
+        return topicUserName;
+    }
+
+    public String getTopicDateTime() {
+        return topicDateTime;
+    }
+
+    public String getTopicUserID() {
+        return topicUserID;
+    }
+
+    public String getTopicID() {
+        return topicID;
+    }
+
+    public String topicTitle;
+
+    public String getTotalComments() {
+        return totalComments;
+    }
+
+    public void setTotalComments(String totalComments) {
+        this.totalComments = totalComments;
+    }
+
+    public String totalComments = "0";
+    public String topicDescription;
+    public String topicUserName;
+    public String topicDateTime;
+    public String topicUserID;
+    public String topicID;
 
     public void setTopicTitle(String topicTitle) {
         this.topicTitle = topicTitle;
@@ -47,6 +84,7 @@ public class TopicModel {
         result.put("topicDateTime",topicDateTime);
         result.put("topicUserID",topicUserID);
         result.put("topicID",topicID);
+        result.put("totalComments",totalComments);
         return result;
     }
 }

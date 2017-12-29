@@ -46,7 +46,7 @@ public class TopicsActivity extends AppCompatActivity {
 
     private void initDataBinding() {
         activityTopicBinding = DataBindingUtil.setContentView(this,R.layout.activity_topic);
-        topicViewModel = new TopicViewModel(TopicsActivity.this);
+        topicViewModel = new TopicViewModel(TopicsActivity.this,activityTopicBinding.topicsList);
         activityTopicBinding.setTopicViewModel(topicViewModel);
     }
 }

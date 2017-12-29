@@ -16,7 +16,7 @@
     <string name="register_success">Register Successfully</string>
     <string name="register"><u>Register Here</u></string>
     <string name="already_account"><u>Already Have Account?</u></string>
-    <string name="hint_topic">Topic Tittle</string>
+    <string name="hint_topic">Topic Headline</string>
     <string name="hint_topics_descp">Topic Description</string>
     <string name="topic">Add Topic</string>
     <string name="addTopic">Add New Topic</string>
