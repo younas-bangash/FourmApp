@@ -25,12 +25,13 @@ public class PostsActivity extends AppCompatActivity {
         if(data != null){
             topicModel = data.getParcelable("topicModel");
         }
-        postsViewModel = new PostsViewModel(topicModel,this);
+
         initDataBinding();
     }
 
     private void initDataBinding() {
         activityPostsBinding = DataBindingUtil.setContentView(this,R.layout.activity_posts);
+        postsViewModel = new PostsViewModel(topicModel,this,activityPostsBinding.topicPosList);
         activityPostsBinding.setPostsViewModel(postsViewModel);
         activityPostsBinding.setTopicModel(topicModel);
     }

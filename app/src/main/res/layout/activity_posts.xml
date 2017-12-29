@@ -54,7 +54,6 @@
             android:layout_above="@+id/bottomeView"
             android:layout_below="@+id/view"
             android:layout_marginTop="16dp"
-            android:paddingBottom="@dimen/aboveFadeBtnSpace"
             android:scrollbars="vertical" />
 
         <View

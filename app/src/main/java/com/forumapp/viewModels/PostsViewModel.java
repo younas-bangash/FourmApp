@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -13,7 +14,9 @@ import com.forumapp.R;
 import com.forumapp.models.PostModel;
 import com.forumapp.models.TopicModel;
 import com.forumapp.utils.SendNotificationService;
+import com.forumapp.views.ChatListAdapter;
 import com.forumapp.views.PostsActivity;
+import com.forumapp.views.TopicListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,15 +38,20 @@ public class PostsViewModel extends BaseObservable {
     private TopicModel topicModel = null;
     private PostsActivity postsActivity = null;
     public String postMessage = null;
+    private ChatListAdapter mChatListAdapter = null;
+    private RecyclerView postsList = null;
 
 
-    public PostsViewModel(TopicModel topicModel, PostsActivity postsActivity) {
+    public PostsViewModel(TopicModel topicModel, PostsActivity postsActivity,RecyclerView postsList) {
         this.topicModel = topicModel;
         this.postsActivity = postsActivity;
+        this.postsList  = postsList;
         databaseReferencePosts = FirebaseDatabase.getInstance().getReference()
                 .child("posts").child(topicModel.getTopicID());
         databaseReferenceTopics = FirebaseDatabase.getInstance().getReference()
                 .child("topics").child(topicModel.getTopicID());
+
+        getPostsList();
     }
 
     public void onFabBtnClick() {
@@ -54,6 +62,11 @@ public class PostsViewModel extends BaseObservable {
         } else {
             addPost();
         }
+    }
+
+    public void getPostsList(){
+        mChatListAdapter = new ChatListAdapter(postsActivity,databaseReferencePosts,postsList);
+        mChatListAdapter.setRecylerView();
     }
 
     private void addPost() {
