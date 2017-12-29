@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -111,6 +112,7 @@ public class TopicViewModel extends BaseObservable {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isComplete() && task.isSuccessful()){
+//                            FirebaseMessaging.getInstance().subscribeToTopic(getTopic());
                             Toast.makeText(callingActivity, callingActivity.getString(R.string.topic_add_success),
                                     Toast.LENGTH_SHORT).show();
                         }
