@@ -11,6 +11,8 @@ import com.forumapp.viewModels.LoginViewModel;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding activityLoginBinding = null;
     LoginViewModel loginViewModel = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +26,5 @@ public class LoginActivity extends AppCompatActivity {
         activityLoginBinding.setLoginViewModel(loginViewModel);
     }
 
-//    @Override
-//    public void update(Observable observable, Object o) {
-//        if (observable instanceof LoginViewModel) {
-//
-//        }
-//    }
+
 }

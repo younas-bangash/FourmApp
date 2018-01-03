@@ -20,7 +20,7 @@ public class FCMNotification {
 
     public static void pushFCMNotification(String sendingDeviceIdKey, String notificationMessage,
                                            String notificationTitle) throws Exception {
-        URL url = new URL(AUTH_KEY_FCM);
+        URL url = new URL(API_URL_FCM);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setUseCaches(false);
         conn.setDoInput(true);
