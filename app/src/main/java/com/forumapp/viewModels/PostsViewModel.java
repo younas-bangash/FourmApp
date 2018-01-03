@@ -13,9 +13,11 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.forumapp.BR;
 import com.forumapp.R;
 import com.forumapp.models.PostModel;
 import com.forumapp.models.TopicModel;
+import com.forumapp.utils.PrefManager;
 import com.forumapp.utils.SendNotificationService;
 import com.forumapp.views.ChatListAdapter;
 import com.forumapp.views.PostsActivity;
@@ -107,6 +109,7 @@ public class PostsViewModel extends BaseObservable {
     }
 
     private void addPost() {
+        PrefManager prefManager = new PrefManager(postsActivity);
         Calendar calendar = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df3 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -117,13 +120,14 @@ public class PostsViewModel extends BaseObservable {
         postModel.setPostDescription(getPostMessage());
         postModel.setPostID(postID);
         postModel.setPostUserID(FirebaseAuth.getInstance().getUid());
-        postModel.setPostUserName("Muhammad Younas");
+        postModel.setPostUserName(prefManager.getName());
 
         databaseReferencePosts.child(postID).setValue(postModel.toMap())
                 .addOnFailureListener(e -> {
 
                 }).addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.isComplete()) {
+                        setPostMessage("");
                         incrementComments();
                     }
                 });
@@ -171,5 +175,6 @@ public class PostsViewModel extends BaseObservable {
 
     public void setPostMessage(String postMessage) {
         this.postMessage = postMessage;
+        notifyChange();
     }
 }

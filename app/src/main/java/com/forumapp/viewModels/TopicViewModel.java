@@ -2,6 +2,7 @@ package com.forumapp.viewModels;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
@@ -9,11 +10,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.forumapp.R;
 import com.forumapp.databinding.AddTopicDialogBinding;
 import com.forumapp.models.TopicModel;
+import com.forumapp.utils.PrefManager;
 import com.forumapp.views.TopicListAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +35,7 @@ import java.util.Calendar;
 
 public class TopicViewModel extends BaseObservable {
     public String topic = null;
+    private Dialog dialog = null;
     private TopicListAdapter mChatListAdapter = null;
     public String topicDescription = null;
     private Activity callingActivity = null;
@@ -51,8 +56,27 @@ public class TopicViewModel extends BaseObservable {
 
         getTopicList();
     }
+
+    private Dialog showAnimatedProgressDialog() {
+        if (dialog == null) {
+            dialog = new Dialog(callingActivity, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setContentView(R.layout.progress_window);
+            //noinspection ConstantConditions
+            dialog.getWindow().setBackgroundDrawableResource(R.color.dialog_window_color);
+
+        }
+        dialog.setOnDismissListener(dialog -> {
+        });
+        dialog.setOnShowListener(dialog -> {
+        });
+        return dialog;
+    }
     
     public void getTopicList(){
+//        showAnimatedProgressDialog().show();
         mChatListAdapter = new TopicListAdapter(callingActivity,databaseReferenceTopics,topicsList);
         mChatListAdapter.setRecylerView();
     }
@@ -89,6 +113,7 @@ public class TopicViewModel extends BaseObservable {
     }
 
     private void addTopic() {
+        PrefManager prefManager = new PrefManager(callingActivity);
         String topicID = databaseReferenceTopics.push().getKey();
         topicModel.setTopicID(topicID);
         topicModel.setTopicTitle(getTopic());
@@ -101,7 +126,7 @@ public class TopicViewModel extends BaseObservable {
         SimpleDateFormat df3 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String formattedDate3 = df3.format(calendar.getTime());
         topicModel.setTopicDateTime(formattedDate3);
-        topicModel.setTopicUserName("Muhammad Younas");
+        topicModel.setTopicUserName(prefManager.getName());
 
         databaseReferenceTopics.child(topicID).setValue(topicModel.toMap())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

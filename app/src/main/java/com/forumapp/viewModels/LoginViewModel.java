@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.forumapp.R;
 import com.forumapp.utils.NetworkUtil;
 import com.forumapp.views.SignUpActivity;
+import com.forumapp.views.TopicsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -72,6 +73,8 @@ public class LoginViewModel extends BaseObservable {
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()) {
                         showAnimatedProgressDialog().dismiss();
+                        callingActivity.startActivity(new Intent(callingActivity, TopicsActivity.class));
+                        callingActivity.finish();
                     }
                 }).addOnFailureListener(e -> {
                     Toast.makeText(callingActivity, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
