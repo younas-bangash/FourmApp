@@ -23,7 +23,6 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:padding="8dp"
-            android:text="Hello Card"
             android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@android:color/black" />
@@ -37,7 +36,6 @@
             android:maxLines="3"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:text="Hello Card"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
         <View
@@ -64,7 +62,6 @@
                 android:drawableStart="@drawable/ic_person"
                 android:drawableLeft="@drawable/ic_person"
                 android:padding="4dp"
-                android:text="Hello Card"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
 
@@ -86,7 +83,6 @@
                     android:drawableLeft="@drawable/ic_comments"
                     android:padding="4dp"
                     android:maxLines="1"
-                    android:text="Hello Card"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
 
@@ -102,7 +98,6 @@
                     android:drawableLeft="@drawable/ic_time"
                     android:padding="4dp"
                     android:maxLines="1"
-                    android:text="Hello Card"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
 

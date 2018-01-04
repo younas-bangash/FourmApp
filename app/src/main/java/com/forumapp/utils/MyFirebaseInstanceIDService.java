@@ -1,20 +1,18 @@
 package com.forumapp.utils;
 
-import android.support.annotation.NonNull;
+import android.annotation.SuppressLint;
+import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import java.util.logging.Logger;
-
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+    private DatabaseReference databaseReferenceUsers = null;
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -41,25 +39,24 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
+    @SuppressLint("LongLogTag")
     private void sendRegistrationToServer(final String token) {
         FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
+        if(mAuth != null) {
+            databaseReferenceUsers = FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(mAuth.getUid());
 
-        if (mAuth != null) {
-            FirebaseDatabase.getInstance().getReference().child(mAuth.getUid())
-                    .child(mAuth.getUid()).child("userTokenID")
-                    .setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
 
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+            databaseReferenceUsers.child(mAuth.getUid()).child("userTokenID")
+                    .setValue(token).addOnCompleteListener(task -> {
+                Log.d("sendRegistrationToServer() : ", "Token Updated Successfully");
 
-                }
+            }).addOnFailureListener(e -> {
+
+                Log.d("sendRegistrationToServer() : ", "Error in Updating Token");
+
             });
         }
+
     }
 }

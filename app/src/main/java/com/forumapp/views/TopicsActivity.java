@@ -2,24 +2,24 @@ package com.forumapp.views;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.forumapp.R;
 import com.forumapp.databinding.ActivityTopicBinding;
-import com.forumapp.viewModels.SignUpViewModel;
+import com.forumapp.utils.PrefManager;
 import com.forumapp.viewModels.TopicViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class TopicsActivity extends AppCompatActivity {
-    ActivityTopicBinding activityTopicBinding = null;
-    TopicViewModel topicViewModel = null;
+    private PrefManager prefManager = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefManager = new PrefManager(this);
         initDataBinding();
 
     }
@@ -37,6 +37,7 @@ public class TopicsActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.ic_logout){
             if(FirebaseAuth.getInstance().getCurrentUser() != null){
                 FirebaseAuth.getInstance().signOut();
+                prefManager.clearPref();
                 startActivity(new Intent(this,LoginActivity.class));
                 finish();
             }
@@ -45,8 +46,8 @@ public class TopicsActivity extends AppCompatActivity {
     }
 
     private void initDataBinding() {
-        activityTopicBinding = DataBindingUtil.setContentView(this,R.layout.activity_topic);
-        topicViewModel = new TopicViewModel(TopicsActivity.this,activityTopicBinding.topicsList);
+        ActivityTopicBinding activityTopicBinding = DataBindingUtil.setContentView(this, R.layout.activity_topic);
+        TopicViewModel topicViewModel = new TopicViewModel(TopicsActivity.this, activityTopicBinding.topicsList);
         activityTopicBinding.setTopicViewModel(topicViewModel);
     }
 }

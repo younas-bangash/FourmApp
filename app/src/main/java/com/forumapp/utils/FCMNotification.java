@@ -8,9 +8,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Developer on 5/2/2017.
- */
 
 public class FCMNotification {
 
@@ -33,13 +30,6 @@ public class FCMNotification {
         JSONObject info = new JSONObject();
         info.put("title", notificationTitle); // Notification title
         info.put("body", notificationMessage); // Notification body
-
-//        info.put(SINGLE_EVENT_ID,eventID);
-//        info.put(SENDER_USER_ID, senderID);
-//        info.put(SINGLE_STALL_ID, stallID);
-//        info.put(SINGLE_STALL_PRICE, stallPrice);
-//        info.put(NOTIF_RECEIVER_USER_ID,notifReceiverUserID);
-//        info.put(NOTIF_TYPE,notificationType);
 
         data.put("data", info);
         OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());

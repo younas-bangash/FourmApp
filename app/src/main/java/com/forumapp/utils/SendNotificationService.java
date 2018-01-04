@@ -12,13 +12,6 @@ public class SendNotificationService extends IntentService {
     public static final String SENDER_ID = "senderID";
     public static final String MESSAGE = "notificationMessage";
     public static final String TITLE = "notificationTitle";
-    private String sendingNotificationID;
-    private String notificationTitle;
-    private String notificationMessage;
-
-    public SendNotificationService(String name) {
-        super(name);
-    }
 
     public SendNotificationService() {
         super(null);
@@ -27,12 +20,12 @@ public class SendNotificationService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //noinspection ConstantConditions
-        sendingNotificationID = intent.getStringExtra(SENDER_ID);
-        notificationMessage = intent.getStringExtra(MESSAGE);
-        notificationTitle = intent.getStringExtra(TITLE);
+        String sendingNotificationID = intent.getStringExtra(SENDER_ID);
+        String notificationMessage = intent.getStringExtra(MESSAGE);
+        String notificationTitle = intent.getStringExtra(TITLE);
         try {
             FCMNotification.pushFCMNotification(sendingNotificationID,
-                    notificationMessage,notificationTitle);
+                    notificationMessage, notificationTitle);
         } catch (Exception e) {
             e.printStackTrace();
         }

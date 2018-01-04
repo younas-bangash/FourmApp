@@ -6,12 +6,10 @@ import android.app.Dialog;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.forumapp.R;
@@ -19,9 +17,6 @@ import com.forumapp.databinding.AddTopicDialogBinding;
 import com.forumapp.models.TopicModel;
 import com.forumapp.utils.PrefManager;
 import com.forumapp.views.TopicListAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,7 +41,7 @@ public class TopicViewModel extends BaseObservable {
     private FirebaseAuth firebaseAuth = null;
     private RecyclerView topicsList = null;
 
-    public TopicViewModel(Activity context, RecyclerView topicsList){
+    public TopicViewModel(Activity context, RecyclerView topicsList) {
         this.callingActivity = context;
         topicModel = new TopicModel();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -74,26 +69,28 @@ public class TopicViewModel extends BaseObservable {
         });
         return dialog;
     }
-    
-    public void getTopicList(){
+
+    public void getTopicList() {
 //        showAnimatedProgressDialog().show();
-        mChatListAdapter = new TopicListAdapter(callingActivity,databaseReferenceTopics,topicsList);
+        mChatListAdapter = new TopicListAdapter(callingActivity, databaseReferenceTopics, topicsList);
         mChatListAdapter.setRecylerView();
     }
 
-    public void addTopicBtnClick(){
-        if(!validateTopicTitle())
+    public void addTopicBtnClick() {
+        if (!validateTopicTitle())
             return;
-        if(!validateTopicDescpiption())
+        if (!validateTopicDescpiption())
             return;
+        addTopicDialogShow.dismiss();
+        showAnimatedProgressDialog().show();
         addTopic();
     }
 
-    public void btnCancel(){
+    public void btnCancel() {
         addTopicDialogShow.dismiss();
     }
 
-    public void onFabBtnClick(){
+    public void onFabBtnClick() {
         AddTopicDialogBinding addTopicDialogBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(callingActivity),
                         R.layout.add_topic_dialog, null, false);
@@ -104,11 +101,11 @@ public class TopicViewModel extends BaseObservable {
         addTopicDialogShow = addTopicDialog.show();
     }
 
-    public void setTopic(String topic){
+    public void setTopic(String topic) {
         this.topic = topic;
     }
 
-    public void setTopicDescription(String description){
+    public void setTopicDescription(String description) {
         this.topicDescription = description;
     }
 
@@ -129,49 +126,47 @@ public class TopicViewModel extends BaseObservable {
         topicModel.setTopicUserName(prefManager.getName());
 
         databaseReferenceTopics.child(topicID).setValue(topicModel.toMap())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isComplete() && task.isSuccessful()){
-//                            FirebaseMessaging.getInstance().subscribeToTopic(getTopic());
-                            Toast.makeText(callingActivity, callingActivity.getString(R.string.topic_add_success),
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isComplete() && task.isSuccessful()) {
+                        showAnimatedProgressDialog().dismiss();
+                        topicsList.smoothScrollToPosition(topicsList.getAdapter().getItemCount() - 1);
+                        Toast.makeText(callingActivity, callingActivity.getString(R.string.topic_add_success),
+                                Toast.LENGTH_SHORT).show();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(callingActivity, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-            }
+                }).addOnFailureListener(e -> {
+            showAnimatedProgressDialog().dismiss();
+            Toast.makeText(callingActivity,
+                    e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
-    private boolean validateTopicTitle(){
-        if(getTopic().isEmpty() || getTopic() == null){
+    private boolean validateTopicTitle() {
+        if (getTopic().isEmpty() || getTopic() == null) {
             Toast.makeText(callingActivity, callingActivity.getString(R.string.req_topic_title),
                     Toast.LENGTH_SHORT).show();
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    private boolean validateTopicDescpiption(){
-        if(getTopicDescription().isEmpty() || getTopicDescription() == null){
+    private boolean validateTopicDescpiption() {
+        if (getTopicDescription().isEmpty() || getTopicDescription() == null) {
             Toast.makeText(callingActivity, callingActivity.getString(R.string.req_topic_descp),
                     Toast.LENGTH_SHORT).show();
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
     @Bindable
-    public String getTopic(){
+    public String getTopic() {
         return topic;
     }
+
     @Bindable
-    public String getTopicDescription(){
+    public String getTopicDescription() {
         return topicDescription;
     }
 }

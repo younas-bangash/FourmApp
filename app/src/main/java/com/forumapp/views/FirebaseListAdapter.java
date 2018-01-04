@@ -1,10 +1,5 @@
 package com.forumapp.views;
 
-/**
- * Created by Developer on 12/28/2017.
- */
-
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
@@ -14,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +17,7 @@ import com.google.firebase.database.Query;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static android.content.ContentValues.TAG;
 import static com.forumapp.views.InfiniteFirebaseArray.ADDED;
 import static com.forumapp.views.InfiniteFirebaseArray.CHANGED;
 import static com.forumapp.views.InfiniteFirebaseArray.REMOVED;

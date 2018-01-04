@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.forumapp.BR;
 import com.forumapp.R;
 import com.forumapp.models.PostModel;
 import com.forumapp.models.TopicModel;
@@ -39,6 +38,7 @@ public class PostsViewModel extends BaseObservable {
     private DatabaseReference databaseReferencePosts = null;
     private DatabaseReference databaseReferenceTopics = null;
     private DatabaseReference databaseReferenceUsers = null;
+    private PrefManager prefManager = null;
     private TopicModel topicModel = null;
     private PostsActivity postsActivity = null;
     public String postMessage = null;
@@ -51,6 +51,7 @@ public class PostsViewModel extends BaseObservable {
         this.topicModel = topicModel;
         this.postsActivity = postsActivity;
         this.postsList  = postsList;
+        this.prefManager = new PrefManager(postsActivity);
         this.totalComments = Integer.parseInt(topicModel.getTotalComments());
         databaseReferencePosts = FirebaseDatabase.getInstance().getReference()
                 .child("posts").child(topicModel.getTopicID());
@@ -127,7 +128,7 @@ public class PostsViewModel extends BaseObservable {
 
                 }).addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.isComplete()) {
-                        setPostMessage("");
+
                         incrementComments();
                     }
                 });
@@ -152,13 +153,17 @@ public class PostsViewModel extends BaseObservable {
                 Log.d("onDataChange", "onDataChange() called with: dataSnapshot = [" +
                         dataSnapshot.getValue() + "]");
                 showAnimatedProgressDialog().dismiss();
-                Intent intent = new Intent(postsActivity, SendNotificationService.class);
-                intent.putExtra(SendNotificationService.MESSAGE, getPostMessage());
-                intent.putExtra(SendNotificationService.TITLE, postsActivity.getString(
-                        R.string.new_post_title));
-                intent.putExtra(SendNotificationService.SENDER_ID,
-                        dataSnapshot.getValue().toString());
-                postsActivity.startService(intent);
+                String userToken = dataSnapshot.getValue().toString();
+                if(!userToken.equals(prefManager.getUserToken())) {
+                    postsList.smoothScrollToPosition(postsList.getAdapter().getItemCount() - 1);
+                    Intent intent = new Intent(postsActivity, SendNotificationService.class);
+                    intent.putExtra(SendNotificationService.MESSAGE, getPostMessage());
+                    intent.putExtra(SendNotificationService.TITLE, postsActivity.getString(
+                            R.string.new_post_title));
+                    intent.putExtra(SendNotificationService.SENDER_ID, userToken);
+                    postsActivity.startService(intent);
+                }
+                setPostMessage("");
             }
 
             @Override

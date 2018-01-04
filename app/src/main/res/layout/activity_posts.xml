@@ -83,7 +83,7 @@
                 android:background="@drawable/rectangular_layuout"
                 android:gravity="start"
                 android:hint="@string/type_post_here"
-                android:minLines="5"
+                android:minLines="2"
                 android:padding="8dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 

@@ -13,10 +13,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by natuan on 17/01/07.
- */
-
 public class InfiniteFirebaseArray implements ChildEventListener {
 
     public static final int ADDED = 0;

@@ -8,10 +8,10 @@ import java.util.Map;
  */
 
 public class SingUpModel {
-    private String userName;
-    private String userEmail;
-    private String userTokenID;
-    private String userID;
+    public String userName;
+    public String userEmail;
+    public String userTokenID;
+    public String userID;
 
     public void setUserName(String userName) {
         this.userName = userName;

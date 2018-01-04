@@ -12,35 +12,41 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.forumapp.R;
+import com.forumapp.models.SingUpModel;
 import com.forumapp.utils.NetworkUtil;
+import com.forumapp.utils.PrefManager;
 import com.forumapp.views.SignUpActivity;
 import com.forumapp.views.TopicsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by YounasBangash on 12/22/2017.
  */
 
 public class LoginViewModel extends BaseObservable {
+    private PrefManager preferenceManager = null;
     private Activity callingActivity = null;
-    //    private LoginModel loginModel = null;
     private FirebaseAuth.AuthStateListener mAuthListener = null;
     private FirebaseAuth firebaseAuth = null;
     public String password = null;
     public String email = null;
     private Dialog dialog = null;
+    private DatabaseReference databaseReferenceUsers = null;
 
 
     public LoginViewModel(Activity callingActivity) {
         this.callingActivity = callingActivity;
-//        this.loginModel = new LoginModel();
+        this.preferenceManager = new PrefManager(callingActivity);
+        databaseReferenceUsers = FirebaseDatabase.getInstance().getReference().child("users");
         firebaseAuth = FirebaseAuth.getInstance();
         mAuthListener = firebaseAuth -> {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            if (firebaseUser != null) {
-
-            }
         };
         firebaseAuth.addAuthStateListener(mAuthListener);
     }
@@ -72,14 +78,37 @@ public class LoginViewModel extends BaseObservable {
         firebaseAuth.signInWithEmailAndPassword(getEmail(), getPassword())
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()) {
+                        getLoogedUserInformation();
+                    }
+                }).addOnFailureListener(e -> {
+            Toast.makeText(callingActivity, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            showAnimatedProgressDialog().dismiss();
+        });
+    }
+
+    private void getLoogedUserInformation() {
+        databaseReferenceUsers.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        SingUpModel singUpModel = dataSnapshot.getValue(SingUpModel.class);
+                        preferenceManager.setEmail(singUpModel.userEmail);
+                        preferenceManager.setName(singUpModel.userName);
+                        preferenceManager.setUserToken(singUpModel.userTokenID);
+                        showAnimatedProgressDialog().dismiss();
+                        callingActivity.startActivity(new Intent(callingActivity, TopicsActivity.class));
+                        callingActivity.finish();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                         showAnimatedProgressDialog().dismiss();
                         callingActivity.startActivity(new Intent(callingActivity, TopicsActivity.class));
                         callingActivity.finish();
                     }
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(callingActivity, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                    showAnimatedProgressDialog().dismiss();
-        });
+                });
+
     }
 
     private Dialog showAnimatedProgressDialog() {
@@ -100,7 +129,7 @@ public class LoginViewModel extends BaseObservable {
         return dialog;
     }
 
-    private  void hideSoftKeyboard() {
+    private void hideSoftKeyboard() {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) callingActivity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
