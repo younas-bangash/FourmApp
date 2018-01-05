@@ -76,6 +76,7 @@
                 android:layout_marginTop="@dimen/buttonTop"
                 android:layout_weight="1"
                 android:maxLines="1"
+                android:layout_marginBottom="4dp"
                 android:onClick="@{()->topicViewModel.addTopicBtnClick()}"
                 android:text="@string/topic" />
 
@@ -86,6 +87,7 @@
                 android:layout_marginTop="@dimen/buttonTop"
                 android:layout_weight="1"
                 android:maxLines="1"
+                android:layout_marginBottom="4dp"
                 android:onClick="@{()->topicViewModel.btnCancel()}"
                 android:text="@string/cancel" />
         </LinearLayout>
